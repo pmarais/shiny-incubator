@@ -2,20 +2,21 @@
 NULL
 
 #' Matrix input
-#' 
+#'
 #' Creates an adjustable-length matrix input.
-#' 
+#'
 #' @param inputId Input variable to assign the control's value to.
 #' @param label Display label for the control.
 #' @param data The initial values to use for the matrix.
-#' 
+#' @param datatype The type of data the input dataframe will except, defaults now to \code{character}.
+#'
 #' @export
-matrixInput <- function(inputId, label, data) {
+matrixInput <- function(inputId, label, data, datatype='character') {
   addResourcePath(
-    prefix='tableinput', 
-    directoryPath=system.file('tableinput', 
+    prefix='tableinput',
+    directoryPath=system.file('tableinput',
                               package='shinyIncubator'))
-  
+
   tagList(
     singleton(
       tags$head(
@@ -25,7 +26,7 @@ matrixInput <- function(inputId, label, data) {
         tags$script(src = 'tableinput/tableinput.js')
       )
     ),
-    
+
     tags$div(
       class = 'control-group tableinput-container',
       tags$label(
@@ -48,7 +49,7 @@ matrixInput <- function(inputId, label, data) {
           lapply(names(data), function(name) {
             tags$col('data-name' = name,
                      'data-field' = name,
-                     'data-type' = 'numeric')
+                     'data-type' = datatype)
           })
         ),
         tags$thead(
@@ -80,7 +81,7 @@ matrixInput <- function(inputId, label, data) {
         ),
         tags$div(
           class = 'modal-body',
-          
+
           HTML('
 <form class="form-horizontal">
   <div class="control-group">
